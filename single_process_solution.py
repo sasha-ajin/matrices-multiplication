@@ -8,10 +8,13 @@ def multiplication_matrices(matrix1, matrix2):
     result_width = matrix_2_columns
     result_height = matrix_1_rows
     result = [[0 for width in range(result_width)] for height in range(result_height)]
-    for i in range(matrix_1_rows):
-        for j in range(matrix_2_columns):
-            for k in range(matrix_2_rows):
-                result[i][j] += matrix1[i][k] * matrix2[k][j]
+    for matrix1_row_index in range(matrix_1_rows):
+        for matrix2_column_index in range(matrix_2_columns):
+            for matrix2_row_index in range(matrix_2_rows):
+                result[matrix1_row_index][matrix2_column_index] += (
+                    matrix1[matrix1_row_index][matrix2_row_index]
+                    * matrix2[matrix2_row_index][matrix2_column_index]
+                )
     return result
 
 
