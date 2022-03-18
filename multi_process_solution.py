@@ -1,4 +1,3 @@
-from audioop import mul
 from multiprocessing import Manager, Process, Queue
 import random
 import time
