@@ -1,39 +1,21 @@
-from multiprocessing import Manager, Process, Queue
+from multiprocessing import Manager, Process
 import random
-import time
 
 
 def multiplication_matrices(matrix1, matrix2):
-    def item_calculation(index, mul1, mul2, queue):
-        queue.put({"index": index, "result": mul1 * mul2})
-
     def result_row_calculation(
         result,
         row_index,
         matrix_2_columns_quanity,
         matrix_2_rows_quanity,
     ):
-        queue = Queue()
         result_row = result[row_index]
-        item_calculation_processes = []
         for matrix2_column_index in range(matrix_2_columns_quanity):
             for matrix2_row_index in range(matrix_2_rows_quanity):
-                item_calculation_process = Process(
-                    target=item_calculation,
-                    args=(
-                        matrix2_column_index,
-                        matrix1[matrix1_row_index][matrix2_row_index],
-                        matrix2[matrix2_row_index][matrix2_column_index],
-                        queue,
-                    ),
+                result_row[matrix2_column_index] += (
+                    matrix1[matrix1_row_index][matrix2_row_index]
+                    * matrix2[matrix2_row_index][matrix2_column_index]
                 )
-                item_calculation_process.start()
-                item_calculation_processes.append(item_calculation_process)
-        for item_calculation_process in item_calculation_processes:
-            item_calculation_process.join()
-        while not queue.empty():
-            item = queue.get()
-            result_row[item["index"]] += item["result"]
         result[row_index] = result_row
 
     matrix_1_columns_quanity, matrix_1_rows_quanity = len(matrix1[0]), len(matrix1)
@@ -63,8 +45,8 @@ def multiplication_matrices(matrix1, matrix2):
 
 if __name__ == "__main__":
     """First matrix, we will multiplicate"""
-    matrix1 = [[random.randrange(1, 10) for width in range(3)] for height in range(3)]
+    matrix1 = [[random.randrange(1, 10) for width in range(40)] for height in range(40)]
 
     """Second matrix, we will multiplicate"""
-    matrix2 = [[random.randrange(1, 10) for width in range(3)] for height in range(3)]
+    matrix2 = [[random.randrange(1, 10) for width in range(40)] for height in range(40)]
     multiplication_matrices(matrix1, matrix2)
