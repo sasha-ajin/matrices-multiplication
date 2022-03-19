@@ -3,21 +3,6 @@ import random
 
 
 def multiplication_matrices(matrix1, matrix2):
-    def result_row_calculation(
-        result,
-        row_index,
-        matrix_2_columns_quanity,
-        matrix_2_rows_quanity,
-    ):
-        result_row = result[row_index]
-        for matrix2_column_index in range(matrix_2_columns_quanity):
-            for matrix2_row_index in range(matrix_2_rows_quanity):
-                result_row[matrix2_column_index] += (
-                    matrix1[matrix1_row_index][matrix2_row_index]
-                    * matrix2[matrix2_row_index][matrix2_column_index]
-                )
-        result[row_index] = result_row
-
     matrix_1_columns_quanity, matrix_1_rows_quanity = len(matrix1[0]), len(matrix1)
     matrix_2_columns_quanity, matrix_2_rows_quanity = len(matrix2[0]), len(matrix2)
     result_width = matrix_2_columns_quanity
@@ -43,10 +28,27 @@ def multiplication_matrices(matrix1, matrix2):
         print(result_manager)
 
 
+def result_row_calculation(
+    result,
+    row_index,
+    matrix_2_columns_quanity,
+    matrix_2_rows_quanity,
+):
+    result_row = result[row_index]
+    for matrix2_column_index in range(matrix_2_columns_quanity):
+        for matrix2_row_index in range(matrix_2_rows_quanity):
+            result_row[matrix2_column_index] += (
+                matrix1[row_index][matrix2_row_index]
+                * matrix2[matrix2_row_index][matrix2_column_index]
+            )
+    result[row_index] = result_row
+
+
 if __name__ == "__main__":
     """First matrix, we will multiplicate"""
-    matrix1 = [[random.randrange(1, 10) for width in range(40)] for height in range(40)]
+    matrix1 = [[random.randrange(1, 10) for width in range(3)] for height in range(3)]
 
     """Second matrix, we will multiplicate"""
-    matrix2 = [[random.randrange(1, 10) for width in range(40)] for height in range(40)]
+    matrix2 = [[random.randrange(1, 10) for width in range(3)] for height in range(3)]
+
     multiplication_matrices(matrix1, matrix2)
